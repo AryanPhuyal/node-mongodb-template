@@ -1,0 +1,8 @@
+[{
+    "firstname":"Super",
+    "lastname":"User",
+    "email":"superuser@test.com",
+    "password":"123456",
+    "type":"superadmin",
+    "phoneNo":"1234567890"
+}]
