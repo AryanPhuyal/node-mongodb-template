@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
+const UserType = require("../model/UserType");
+
 const Role = require("../model/Role");
 
 module.exports = async (req, res, next) => {
@@ -12,9 +14,14 @@ module.exports = async (req, res, next) => {
       let userId = data.id;
       let user = await User.findById(userId);
       if (user) {
-        let role = await Role.findOne({ userType: user.userType });
-        req.user = user;
-        req.role = role;
+        let userType = await UserType.findById(user.userType)
+        if (userType.name.toLowerCase == 'superadmin') {
+          req.role = "superadmin"
+        } else {
+          let role = await Role.findOne({ userType: user.userType });
+          req.user = user;
+          req.role = role;
+        }
         next();
       } else {
         throw "error";
